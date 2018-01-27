@@ -18,13 +18,30 @@
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/counter']">
-                        <span class='glyphicon glyphicon-education'></span> Counter
+                    <a [routerLink]="['/login']">
+                        <span class='glyphicon glyphicon-user'></span> Login
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/fetch-data']">
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
+                <!-- These are here for place holders for the other Explorer links im making. These need the conditionals too. -->
+                <li [routerLinkActive]="['link-active']" class="explorerOptions" *ngIf="true"> 
+                    <a [routerLink]="['/login']">
+                        <span class='glyphicon glyphicon-user'></span> Explorer
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" class="explorerOptions" *ngIf="true"> 
+                    <a [routerLink]="['/login']">
+                        <span class='glyphicon glyphicon-user'></span> Explorer
+                    </a>
+                </li>
+                <!-- These are here for place holders for the other Admin links im making. These need the conditionals too. -->
+                <li [routerLinkActive]="['link-active']" class="adminOptions" *ngIf="true"> 
+                    <a [routerLink]="['/login']">
+                        <span class='glyphicon glyphicon-user'></span> Admin
+                    </a>
+                </li>
+                <li [routerLinkActive]="['link-active']" class="adminOptions" *ngIf="true"> 
+                    <a [routerLink]="['/login']">
+                        <span class='glyphicon glyphicon-user'></span> Admin
                     </a>
                 </li>
             </ul>
