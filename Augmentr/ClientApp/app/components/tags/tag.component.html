@@ -1,0 +1,20 @@
+<div class="alert alert-info" *ngIf="errorMsg !== undefined && errorMsg !== null" (click)="clearError()">{{ errorMsg }}</div>
+<div class="container">
+    <h1>Tags</h1>
+    <ul>
+        <li *ngFor="let tag of tags">
+            <p>{{ tag.id }}: {{ tag.location }}
+                <span class='glyphicon glyphicon-trash' (click)="removeTag(tag)"></span>
+            </p>
+        </li>
+    </ul>
+
+    <h1>Create Tags</h1>
+    <div class="field">
+        <p>Location</p>
+        <input type="text" [(ngModel)]="location">
+    </div>
+    <div class="actions">
+        <button (click)="createTag()">Create</button>
+    </div>
+</div>

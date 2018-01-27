@@ -8,6 +8,7 @@ import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { TagComponent } from './components/tags/tag.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 
@@ -15,8 +16,9 @@ import { CounterComponent } from './components/counter/counter.component';
     declarations: [
         AppComponent,
         NavMenuComponent,
-        CounterComponent,
         LoginComponent,
+        TagComponent,
+        CounterComponent,
         FetchDataComponent,
         HomeComponent
     ],
@@ -27,8 +29,9 @@ import { CounterComponent } from './components/counter/counter.component';
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
-            { path: 'counter', component: CounterComponent },
             { path: 'login', component: LoginComponent },
+            { path: 'tags', component: TagComponent },
+            { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
         ])
