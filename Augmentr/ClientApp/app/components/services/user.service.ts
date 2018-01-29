@@ -11,38 +11,36 @@ export class UserService {
     private headers = new Headers({ 'Content-Type': 'application/json', 'charset': 'UTF-8' });
     private options = new RequestOptions({ headers: this.headers });
 
+    private url = 'api/v1/'
+
     constructor(private http: Http) { }
 
     register(user: User): Observable<any> {
-        return this.http.post('/api/user', JSON.stringify(user), this.options);
+        return this.http.post(this.url + 'auth/register', JSON.stringify(user), this.options);
     }
 
     login(credentials: any): Observable<any> {
-        return this.http.post('/api/login', JSON.stringify(credentials), this.options);
-    }
-
-    getUsers(): Observable<any> {
-        return this.http.get('/api/users').map(res => res.json());
+        return this.http.post(this.url + 'auth/login', JSON.stringify(credentials), this.options);
     }
 
     countUsers(): Observable<any> {
-        return this.http.get('/api/users/count').map(res => res.json());
+        return this.http.get(this.url + 'users/count').map(res => res.json());
     }
 
     addUser(user: User): Observable<any> {
-        return this.http.post('/api/user', JSON.stringify(user), this.options);
+        return this.http.post(this.url + 'user', JSON.stringify(user), this.options);
     }
 
     getUser(user: User): Observable<any> {
-        return this.http.get(`/api/user/${user._id}`).map(res => res.json());
+        return this.http.get(this.url + `user/${user._id}`).map(res => res.json());
     }
 
-    editUser(user): Observable<any> {
-        return this.http.put(`/api/user/${user._id}`, JSON.stringify(user), this.options);
+    editUser(user: User): Observable<any> {
+        return this.http.put(this.url + `user/${user._id}`, JSON.stringify(user), this.options);
     }
 
-    deleteUser(user): Observable<any> {
-        return this.http.delete(`/api/user/${user._id}`, this.options);
+    deleteUser(user: User): Observable<any> {
+        return this.http.delete(this.url + `user/${user._id}`, this.options);
     }
 
 }

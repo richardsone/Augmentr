@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { JwtHelper } from 'angular2-jwt';
 
-
 import { UserService } from './user.service';
 
 @Injectable()
@@ -11,7 +10,7 @@ export class AuthService {
     private _currentUser : User;
 
     get currentUser(): User {
-        return this.currentUser;
+        return this._currentUser;
     }
 
     set currentUser(newUser: User) {
@@ -34,6 +33,7 @@ export class AuthService {
                 loggedIn: false,
                 isAdmin: false
             }
+            this._currentUser = newVisitor;
             localStorage.setItem('token', JSON.stringify(newVisitor));
         }
     }
@@ -43,14 +43,22 @@ export class AuthService {
             res => {
                 localStorage.setItem('token', res.token);
                 this.decodeToken(user);
-                return this.currentUser.loggedIn;
+                return this._currentUser.loggedIn;
             }
         );
     }
 
     logout() {
         localStorage.removeItem('token');
-        this.currentUser = { _id: '', email: '', password: '', role: '', loggedIn: false, isAdmin: false };
+        this._currentUser = { 
+            _id: '', 
+            email: '', 
+            password: '', 
+            role: 'visitor', 
+            loggedIn: false, 
+            isAdmin: false 
+        };
+        localStorage.setItem('token', JSON.stringify(this._currentUser));
         this.router.navigate(['/']);
     }
 

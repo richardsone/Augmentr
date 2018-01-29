@@ -16,8 +16,7 @@ export class LoginComponent {
     
     constructor(private auth: AuthService,
                 private router: Router){
-        // This just shows that the app component's user object thing is getting passed in.
-        console.log(this.parent.currentUser)
+        console.log(auth.currentUser);
     }
 
     login(){
