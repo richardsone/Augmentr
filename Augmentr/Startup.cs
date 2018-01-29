@@ -30,6 +30,7 @@ namespace Augmentr
             services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
 
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITagRepository, TagRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

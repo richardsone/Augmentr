@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
 
@@ -10,6 +11,7 @@ namespace Augmentr.Dal.Models
         public string Name { get; set; }
         public string Password { get; set; }
 
+<<<<<<< HEAD
         public string tokenize()
         {
             return GetHashCode().ToString() + Convert.ToInt32(Email).ToString();
@@ -20,5 +22,8 @@ namespace Augmentr.Dal.Models
             this.Email = Email;
             this.Password = Password;
         }
+=======
+        public IList<Tag> Tags { get; set; }
+>>>>>>> af827127217fe605171dae15f7a829a870232f80
     }
 }
