@@ -6,10 +6,5 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    // I put the currentUser out here in the App level since it'll carry across the entire app
-    public currentUser: Object = {};
-    
-    constructor(){
-        this.currentUser = { level: 'visitor', loggedIn: false};
-    }
+    constructor() { }
 }

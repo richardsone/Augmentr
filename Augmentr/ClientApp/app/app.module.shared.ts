@@ -12,6 +12,11 @@ import { TagComponent } from './components/tags/tag.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 
+import { AuthService } from './components/services/auth.service';
+
+import { User } from './components/models/user';
+import { UserService } from './components/services/user.service';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -35,6 +40,10 @@ import { CounterComponent } from './components/counter/counter.component';
             { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
         ])
+    ],
+    providers: [
+        AuthService,
+        UserService
     ]
 })
 export class AppModuleShared {

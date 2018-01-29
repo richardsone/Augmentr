@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppComponent } from '../app/app.component';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     selector: 'login',
@@ -12,9 +14,9 @@ export class LoginComponent {
     public errorMsg : any;
     public loggingIn : boolean = true;
     
-    constructor(@Inject(AppComponent) public parent: AppComponent){
-        // This just shows that the app component's user object thing is getting passed in.
-        console.log(this.parent.currentUser)
+    constructor(private auth: AuthService,
+                private router: Router){
+        console.log(auth.currentUser);
     }
 
     login(){
