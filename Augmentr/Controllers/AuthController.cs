@@ -26,11 +26,14 @@ namespace Augmentr.Controllers
 
             return Ok(token);
         }
-
-        // POST: api/v1/auth/register
-        [HttpPost("[action]")]
-        public void Register()
+        public IActionResult Register([FromBody] RegisterRequest request)
         {
+            var token = _userRepository.TryRegister(request);
+
+            if (token == null) {
+                return BadRequest("User already Exists");
+            } 
+            return Ok(token);
         }
 
         // POST: api/v1/auth/logout
