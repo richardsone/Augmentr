@@ -21,6 +21,7 @@ export class AuthService {
 
     constructor(private userService: UserService,
                 private router: Router) {
+        console.log('auth service constructed');
         this._currentUser = { 
             _id: '',
             email: '',

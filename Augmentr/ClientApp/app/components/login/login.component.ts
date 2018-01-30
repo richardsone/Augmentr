@@ -20,14 +20,25 @@ export class LoginComponent {
     }
 
     login(){
-        this.auth.login({
-            _id: '1',
-            email: 'stuff@stuff.com',
-            password: 'password',
-            role: 'explorer',
-            loggedIn: true,
-            isAdmin: false
-        }); 
+        if (this.email === 'admin@augmentr.com' && this.password === 'password') {
+            this.auth.login({
+                _id: '1',
+                email: this.email,
+                password: this.password,
+                role: 'admin',
+                loggedIn: true,
+                isAdmin: true
+            }); 
+        } else if (this.email ==='explorer@augmentr.com' && this.password === 'betterpassword') {
+            this.auth.login({
+                _id: '1',
+                email: this.email,
+                password: this.password,
+                role: 'explorer',
+                loggedIn: true,
+                isAdmin: false
+            }); 
+        }
         // Do stuff with login email and password
         // For the time being im accepting anything and that makes the currentUser a logged in admin
         // API calls, promise then redirect or display error
