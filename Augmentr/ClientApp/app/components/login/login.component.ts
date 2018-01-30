@@ -20,10 +20,19 @@ export class LoginComponent {
     }
 
     login(){
+        this.auth.login({
+            _id: '1',
+            email: 'stuff@stuff.com',
+            password: 'password',
+            role: 'explorer',
+            loggedIn: true,
+            isAdmin: false
+        }); 
         // Do stuff with login email and password
         // For the time being im accepting anything and that makes the currentUser a logged in admin
         // API calls, promise then redirect or display error
         this.errorMsg = this.email + " : " + this.password;
+        console.log(this.auth.currentUser);
     }
 
     register(){

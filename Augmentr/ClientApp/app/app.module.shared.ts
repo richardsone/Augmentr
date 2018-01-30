@@ -13,6 +13,8 @@ import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 
 import { AuthService } from './components/services/auth.service';
+import { AuthGuardAdmin } from './components/services/auth-guard-admin.service';
+import { AuthGuardExplorer } from './components/services/auth-guard-explorer.service';
 
 import { User } from './components/models/user';
 import { UserService } from './components/services/user.service';
@@ -35,7 +37,7 @@ import { UserService } from './components/services/user.service';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'login', component: LoginComponent },
-            { path: 'tags', component: TagComponent },
+            { path: 'tags', component: TagComponent, canActivate: [AuthGuardExplorer] },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: '**', redirectTo: 'home' }
@@ -43,7 +45,9 @@ import { UserService } from './components/services/user.service';
     ],
     providers: [
         AuthService,
-        UserService
+        UserService,
+        AuthGuardAdmin,
+        AuthGuardExplorer
     ]
 })
 export class AppModuleShared {

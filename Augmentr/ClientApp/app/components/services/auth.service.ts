@@ -47,13 +47,15 @@ export class AuthService {
     }
 
     login(user: User) {
-        return this.userService.login(user).map(res => res.json()).map(
-            res => {
-                localStorage.setItem('token', res.token);
-                this.decodeToken(user);
-                return this._currentUser.loggedIn;
-            }
-        );
+        console.log(user);
+        this._currentUser = user;
+        // return this.userService.login(user).map(res => res.json()).map(
+        //     res => {
+        //         localStorage.setItem('token', res.token);
+        //         this.decodeToken(user);
+        //         return this._currentUser.loggedIn;
+        //     }
+        // );
     }
 
     logout() {
