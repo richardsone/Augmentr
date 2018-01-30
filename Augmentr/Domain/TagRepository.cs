@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Augmentr.Dal;
 using Augmentr.Dal.Models;
@@ -17,10 +19,12 @@ namespace Augmentr.Domain
     public class TagRepository : ITagRepository
     {
         private readonly DataContext _context;
+        private readonly ITokenFactory _tokenFactory;
 
-        public TagRepository(DataContext context)
+        public TagRepository(DataContext context, ITokenFactory tokenFactory)
         {
             _context = context;
+            _tokenFactory = tokenFactory;
         }
 
         public TagResponse LoadTag(int id)
@@ -37,9 +41,11 @@ namespace Augmentr.Domain
         public void CreateTag(TagRequest request)
         {
             // Verify token
+            // If it deserializes correctly, create the tag
+            var user = _tokenFactory.CreateUserFromToken(request.Token);
 
             // Create tag
-            var tag = MapRequestToTag(request, string.Empty);
+            var tag = MapRequestToTag(request, user.Email);
 
             _context.Tags.Add(tag);
 
@@ -49,25 +55,45 @@ namespace Augmentr.Domain
         public void UpdateTag(TagRequest request)
         {
             // Verify token
+            var user = _tokenFactory.CreateUserFromToken(request.Token);
 
-            // Create tag
-            var tag = MapRequestToTag(request, string.Empty);
+            if (VerifyTokenMatchesPreviousTag(user, request))
+            {
+                // Create tag
+                var tag = MapRequestToTag(request, user.Email);
 
-            _context.Tags.Update(tag);
+                _context.Tags.Update(tag);
 
-            _context.SaveChanges();
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteTag(TagRequest request)
         {
             // Verify token
+            var user = _tokenFactory.CreateUserFromToken(request.Token);
 
-            // Create tag
-            var tag = MapRequestToTag(request, string.Empty);
+            if (VerifyTokenMatchesPreviousTag(user, request))
+            {
+                // Create tag
+                var tag = MapRequestToTag(request, user.Email);
 
-            _context.Tags.Remove(tag);
+                _context.Tags.Remove(tag);
 
-            _context.SaveChanges();
+                _context.SaveChanges();
+            }
+        }
+
+        private bool VerifyTokenMatchesPreviousTag(User user, TagRequest request)
+        {
+            var previousTag = _context.Tags
+                .Include(_ => _.User)
+                .FirstOrDefault(_ => _.Id == request.Id);
+
+            if (previousTag == null)
+                throw new KeyNotFoundException(request.Id.ToString());
+
+            return user.Email == previousTag.User.Email;
         }
 
         private Tag MapRequestToTag(TagRequest request, string userEmail)

@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Augmentr.Dal;
 using Augmentr.Domain;
+using JWT;
+using JWT.Algorithms;
+using JWT.Serializers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -27,10 +26,14 @@ namespace Augmentr
         {
             services.AddMvc();
 
-            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase(Guid.NewGuid().ToString()));
+            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("5dafbe98-2b52-48c4-994e-9845751d5919"));
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
+            services.AddTransient<ITokenFactory, TokenFactory>();
+
+            services.AddTransient<IJwtEncoder>(_ => new JwtEncoder(new HMACSHA256Algorithm(), new JsonNetSerializer(), new JwtBase64UrlEncoder()));
+            services.AddTransient<IJwtDecoder>(_ => CreateJwtDecoder());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +64,14 @@ namespace Augmentr
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+        }
+
+        private static JwtDecoder CreateJwtDecoder()
+        {
+            var serializer = new JsonNetSerializer();
+            var provider = new UtcDateTimeProvider();
+
+            return new JwtDecoder(serializer, new JwtValidator(serializer, provider), new JwtBase64UrlEncoder());
         }
     }
 }

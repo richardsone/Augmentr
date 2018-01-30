@@ -14,7 +14,7 @@ namespace Augmentr.Controllers
             _userRepository = userRepository;
         }
 
-        // POST: api/v1/auth/register
+        // POST: api/v1/auth/login
         [HttpPost("[action]")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
@@ -26,6 +26,9 @@ namespace Augmentr.Controllers
 
             return Ok(token);
         }
+
+        // POST: api/v1/auth/register
+        [HttpPost("[action]")]
         public IActionResult Register([FromBody] RegisterRequest request)
         {
             var token = _userRepository.TryRegister(request);

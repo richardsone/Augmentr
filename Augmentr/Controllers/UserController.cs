@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Augmentr.Domain;
 using Augmentr.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,10 @@ namespace Augmentr.Controllers
 
                 return Ok();
             }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(request.Id);
+            }
             catch (Exception)
             {
                 return BadRequest();
@@ -71,6 +76,10 @@ namespace Augmentr.Controllers
                 _tagRepository.DeleteTag(request);
 
                 return Ok();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(request.Id);
             }
             catch (Exception)
             {
