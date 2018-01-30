@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { AppComponent } from '../app/app.component';
+import { AuthService } from '../services/auth.service';
+import { Tag } from '../models/tag';
 
 @Component({
     selector: 'tags',
@@ -7,15 +9,15 @@ import { AppComponent } from '../app/app.component';
     styleUrls: ['./tag.component.css']
 })
 export class TagComponent {
-    public tags : tag[];
+    public tags : Tag[];
     public password : string;
     public errorMsg : any;
     public loggingIn : boolean = true;
     public location : string;
     
-    constructor(@Inject(AppComponent) public parent: AppComponent){
+    constructor(private auth: AuthService) {
         // This just shows that the app component's user object thing is getting passed in.
-        console.log(this.parent.currentUser)
+        console.log(auth.currentUser);
         // Do a API call to get the collection of tags that the current user can see
         // this.tags = array of tags, adjust the interface down there as needed.
 
@@ -40,7 +42,7 @@ export class TagComponent {
         this.tags.push({ id: 666, location: this.location})
     }
 
-    removeTag(deadTag : tag){
+    removeTag(deadTag : Tag){
         // API call to kill that tag.
         this.tags.splice(this.tags.indexOf(deadTag), 1)
     }
@@ -48,12 +50,4 @@ export class TagComponent {
     clearError(){
         this.errorMsg = null;
     }
-
 }
-
-export interface tag{
-    id : number,
-    location : string
-}
-
-

@@ -21,9 +21,17 @@ export class AuthService {
 
     constructor(private userService: UserService,
                 private router: Router) {
+        this._currentUser = { 
+            _id: '',
+            email: '',
+            password: '',
+            role: '',
+            loggedIn: false,
+            isAdmin: false
+         }
         const token = localStorage.getItem('token');
         if (token) {
-            this.decodeToken(token);
+            this.decodeToken(JSON.parse(token));
         } else {
             const newVisitor = {
                 _id: '',
