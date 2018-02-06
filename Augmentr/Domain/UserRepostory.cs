@@ -2,6 +2,7 @@ using System.Linq;
 using Augmentr.Dal;
 using Augmentr.Dal.Models;
 using Augmentr.Domain.Models;
+using Encryption = BCrypt.Net.BCrypt;
 
 namespace Augmentr.Domain
 {
@@ -24,7 +25,8 @@ namespace Augmentr.Domain
 
         public string TryLogin(LoginRequest request)
         {
-            var user = _context.Users.FirstOrDefault(_ => request.Email == _.Email && request.Password == _.Password);
+            var user = _context.Users.FirstOrDefault(_ => request.Email == _.Email && Encryption.Verify(request.Password, _.Password, false));
+
             if(user!= null){
             return _tokenFactory.CreateTokenFromUser(user);
             } else {
@@ -55,7 +57,7 @@ namespace Augmentr.Domain
             {
                 Email = request.Email,
                 Name = request.Name,
-                Password = request.Password,
+                Password = Encryption.HashPassword(request.Password),
                 Role = Roles.User
             };
         }
