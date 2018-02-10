@@ -50,10 +50,16 @@ namespace Augmentr.Domain
         {
             // Verify token
             // If it deserializes correctly, create the tag
-            var user = _tokenFactory.CreateUserFromToken(request.Token);
+            var user = _tokenFactory.CreateUserFromToken(request.Token, out bool expired);
+
+            if (expired)
+                throw new ArgumentOutOfRangeException();
 
             // Create tag
             var tag = MapRequestToTag(request, user.Email);
+
+            var previousTag = _context.Tags.Last();
+            tag.Id = previousTag == null ? 1 : previousTag.Id + 1;
 
             _context.Tags.Add(tag);
 
@@ -63,7 +69,10 @@ namespace Augmentr.Domain
         public void UpdateTag(TagRequest request)
         {
             // Verify token
-            var user = _tokenFactory.CreateUserFromToken(request.Token);
+            var user = _tokenFactory.CreateUserFromToken(request.Token, out bool expired);
+
+            if (expired)
+                throw new ArgumentOutOfRangeException();
 
             if (VerifyTokenMatchesPreviousTag(user, request))
             {
@@ -79,7 +88,10 @@ namespace Augmentr.Domain
         public void DeleteTag(TagRequest request)
         {
             // Verify token
-            var user = _tokenFactory.CreateUserFromToken(request.Token);
+            var user = _tokenFactory.CreateUserFromToken(request.Token, out bool expired);
+
+            if (expired)
+                throw new ArgumentOutOfRangeException();
 
             if (VerifyTokenMatchesPreviousTag(user, request))
             {
@@ -95,6 +107,7 @@ namespace Augmentr.Domain
         private bool VerifyTokenMatchesPreviousTag(User user, TagRequest request)
         {
             var previousTag = _context.Tags
+                .AsNoTracking()
                 .Include(_ => _.User)
                 .FirstOrDefault(_ => _.Id == request.Id);
 

@@ -1,5 +1,6 @@
 using System;
 using Augmentr.Dal.Models;
+using Augmentr.Domain.Models;
 using JWT;
 using Microsoft.Extensions.Options;
 
@@ -8,7 +9,7 @@ namespace Augmentr.Domain
     public interface ITokenFactory
     {
         string CreateTokenFromUser(User user);
-        User CreateUserFromToken(string token);
+        User CreateUserFromToken(string token, out bool expired);
     }
 
     public class TokenFactory : ITokenFactory
@@ -25,16 +26,43 @@ namespace Augmentr.Domain
 
         public string CreateTokenFromUser(User user)
         {
-            var token = _encoder.Encode(user, _tokenSecret);
+            var userToken = MapUserToToken(user);
+
+            var token = _encoder.Encode(userToken, _tokenSecret);
 
             return token;
         }
 
-        public User CreateUserFromToken(string token)
+        public User CreateUserFromToken(string token, out bool expired)
         {
-            var user = _decoder.DecodeToObject<User>(token, _tokenSecret, true);
+            var userToken = _decoder.DecodeToObject<UserToken>(token, _tokenSecret, false);
+
+            expired = userToken.exp < DateTime.Now;
+
+            var user = MapTokenToUser(userToken);
 
             return user;
+        }
+
+        private UserToken MapUserToToken(User user)
+        {
+            return new UserToken
+            {
+                Email = user.Email,
+                Name = user.Name,
+                exp = DateTime.Now.AddDays(2),
+                Role = user.Role
+            };
+        }
+
+        private User MapTokenToUser(UserToken userToken)
+        {
+            return new User
+            {
+                Email = userToken.Email,
+                Name = userToken.Name,
+                Role = userToken.Role
+            };
         }
     }
 }
