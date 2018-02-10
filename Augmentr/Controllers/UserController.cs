@@ -10,10 +10,12 @@ namespace Augmentr.Controllers
     public class UserController : Controller
     {
         private readonly ITagRepository _tagRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UserController(ITagRepository tagRepository)
+        public UserController(ITagRepository tagRepository, IUserRepository userRepository)
         {
             _tagRepository = tagRepository;
+            _userRepository = userRepository;
         }
 
         // GET: api/v1/user/tags
@@ -85,6 +87,14 @@ namespace Augmentr.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        // GET: api/v1/user/query
+        [HttpGet("query")]
+        public IActionResult Query([FromBody] string queryString)
+        {
+            var user = _userRepository.Query(queryString);
+            return Ok(user);
         }
     }
 }
