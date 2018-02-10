@@ -14,7 +14,8 @@ export class AuthService {
   }
 
   set currentUser(newUser: User) {
-    this._currentUser;
+    console.log('new user', newUser)
+    this._currentUser = newUser as User;
   }
 
   jwtHelper: JwtHelper = new JwtHelper();
@@ -26,7 +27,7 @@ export class AuthService {
       Email: "",
       Name: '',
       Password: "",
-      Role: "",
+      Role: 0,
       loggedIn: false,
       isAdmin: false,
       Tags: []
@@ -40,7 +41,7 @@ export class AuthService {
         Email: "",
         Name: '',
         Password: "",
-        Role: "visitor",
+        Role: 0,
         loggedIn: false,
         isAdmin: false,
         Tags: []
@@ -50,7 +51,7 @@ export class AuthService {
     }
   }
 
-  login(user: User) {
+  login(user: any) {
     console.log(user);
     this._currentUser = user;
     return this.userService.login(user).subscribe(res => {
@@ -73,7 +74,7 @@ export class AuthService {
       Email: "",
       Name: '',
       Password: "",
-      Role: "visitor",
+      Role: 0,
       loggedIn: false,
       isAdmin: false,
       Tags: []

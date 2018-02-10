@@ -26,35 +26,19 @@ export class LoginComponent {
   }
 
   login() {
-    if (this.email === "admin@augmentr.com" && this.password === "password") {
-      this.auth.login({
-        _id: "1",
-        Email: this.email,
-        Name: "adminname",
-        Password: this.password,
-        Role: "admin",
-        loggedIn: true,
-        isAdmin: true,
-        Tags: []
-      });
-    } else if (
-      this.email === "explorer@augmentr.com" &&
-      this.password === "betterpassword"
-    ) {
-      this.auth.login({
-        _id: "1",
-        Email: this.email,
-        Name: "explorername",
-        Password: this.password,
-        Role: "explorer",
-        loggedIn: true,
-        isAdmin: false,
-        Tags: []
-      });
-    }
     // Do stuff with login email and password
     // For the time being im accepting anything and that makes the currentUser a logged in admin
     // API calls, promise then redirect or display error
+    this.userService.login({Email: this.email, Password: this.password}).subscribe(
+      response => {
+        console.log("you've logged in");
+        console.log(response._body);
+        let loggedInUser = JSON.parse(response._body);
+        this.auth.currentUser = loggedInUser as User;
+        console.log(this.auth.currentUser);
+      }
+    )
+
     this.errorMsg = this.email + " : " + this.password;
     console.log(this.auth.currentUser);
   }
@@ -65,7 +49,7 @@ export class LoginComponent {
       Email: this.email,
       Name: this.name,
       Password: this.password,
-      Role: "explorer",
+      Role: 1,
       loggedIn: true,
       isAdmin: false,
       Tags: []
@@ -75,10 +59,9 @@ export class LoginComponent {
         console.log("you successfully registered!", "success");
         console.log(response);
         let test = response._body;
-        // test = atob(response._body);
         let myObject = JSON.parse(test);
         console.log(myObject);
-        // this.router.navigate(["/login"]);
+        this.router.navigate(["/login"]);
       },
       error => {
           console.log("email already exists", "danger")
