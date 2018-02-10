@@ -11,7 +11,7 @@ namespace Augmentr.Domain
     public interface ITagRepository
     {
         TagResponse LoadTag(int id);
-        void CreateTag(TagRequest request);
+        int CreateTag(TagRequest request);
         void UpdateTag(TagRequest request);
         void DeleteTag(TagRequest request);
 
@@ -46,7 +46,7 @@ namespace Augmentr.Domain
             return MapTagListToResponse(userWithTags.Tags);
         }
 
-        public void CreateTag(TagRequest request)
+        public int CreateTag(TagRequest request)
         {
             // Verify token
             // If it deserializes correctly, create the tag
@@ -64,6 +64,8 @@ namespace Augmentr.Domain
             _context.Tags.Add(tag);
 
             _context.SaveChanges();
+
+            return tag.Id;
         }
 
         public void UpdateTag(TagRequest request)
