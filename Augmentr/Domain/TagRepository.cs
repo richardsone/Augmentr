@@ -14,6 +14,8 @@ namespace Augmentr.Domain
         void CreateTag(TagRequest request);
         void UpdateTag(TagRequest request);
         void DeleteTag(TagRequest request);
+
+        TagListResponse LoadTagForUser(string email);
     }
 
     public class TagRepository : ITagRepository
@@ -36,6 +38,12 @@ namespace Augmentr.Domain
             var response = MapTagToResponse(tag);
 
             return response;
+        }
+
+        public TagListResponse LoadTagForUser(string email)
+        {
+            var userWithTags = _context.Users.FirstOrDefault(_ => _.Email == email);                     
+            return MapTagListToResponse(userWithTags.Tags);
         }
 
         public void CreateTag(TagRequest request)
@@ -121,6 +129,22 @@ namespace Augmentr.Domain
                 Content = tag.Content,
                 TimePosted = tag.TimePosted
             };
+        }
+
+        private TagListResponse MapTagListToResponse(IList<Tag> tags)
+        {
+            TagListResponse response = new TagListResponse();
+            response.tags = new List<TagResponse>();
+            response.User = new UserResponse
+                {
+                    Email = tags.First().User.Email,
+                    Name = tags.First().User.Name
+                };
+            for(int i =0; i < tags.Count; i++)
+            {
+                response.tags.Add(MapTagToResponse(tags[i]));
+            }
+            return response;
         }
     }
 }

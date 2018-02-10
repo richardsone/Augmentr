@@ -19,9 +19,16 @@ namespace Augmentr.Controllers
         }
 
         // GET: api/v1/user/tags
-        [HttpGet("tags")]
-        public void LoadTags()
+        [HttpGet("tags/user/{userEmail}")]
+        public IActionResult LoadTags(string userEmail)
         {
+            var registerRequest = new RegisterRequest();
+            registerRequest.Email = userEmail;
+            registerRequest.Name = "Ian";
+            registerRequest.Password = "password";
+            _userRepository.TryRegister(registerRequest);
+            var tags = _tagRepository.LoadTagForUser(userEmail);
+            return Ok(tags);
         }
 
         // GET: api/v1/user/tags/:id

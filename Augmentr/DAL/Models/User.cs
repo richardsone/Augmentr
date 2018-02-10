@@ -13,5 +13,9 @@ namespace Augmentr.Dal.Models
         public Roles Role { get; set; }
 
         public IList<Tag> Tags { get; set; }
+
+        public User(){
+            Tags = new List<Tag>();
+        }
     }
 }
