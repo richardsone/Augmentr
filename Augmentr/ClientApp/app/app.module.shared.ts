@@ -22,6 +22,7 @@ import { User } from './components/models/user';
 import { UserService } from './components/services/user.service';
 import { Expansion } from '@angular/compiler';
 import { AdminComponent } from './components/admin/admin.component';
+import { TagService } from './components/services/tags.service';
 
 @NgModule({
     declarations: [
@@ -55,7 +56,8 @@ import { AdminComponent } from './components/admin/admin.component';
         AuthService,
         UserService,
         AuthGuardAdmin,
-        AuthGuardExplorer
+        AuthGuardExplorer,
+        TagService
     ]
 })
 export class AppModuleShared {
