@@ -23,11 +23,13 @@ export class AuthService {
     console.log("auth service constructed");
     this._currentUser = {
       _id: "",
-      email: "",
-      password: "",
-      role: "",
+      Email: "",
+      Name: '',
+      Password: "",
+      Role: "",
       loggedIn: false,
-      isAdmin: false
+      isAdmin: false,
+      Tags: []
     };
     const token = localStorage.getItem("token");
     if (token) {
@@ -35,11 +37,13 @@ export class AuthService {
     } else {
       const newVisitor = {
         _id: "",
-        email: "",
-        password: "",
-        role: "visitor",
+        Email: "",
+        Name: '',
+        Password: "",
+        Role: "visitor",
         loggedIn: false,
-        isAdmin: false
+        isAdmin: false,
+        Tags: []
       };
       this._currentUser = newVisitor;
       localStorage.setItem("token", JSON.stringify(newVisitor));
@@ -66,11 +70,13 @@ export class AuthService {
     localStorage.removeItem("token");
     this._currentUser = {
       _id: "",
-      email: "",
-      password: "",
-      role: "visitor",
+      Email: "",
+      Name: '',
+      Password: "",
+      Role: "visitor",
       loggedIn: false,
-      isAdmin: false
+      isAdmin: false,
+      Tags: []
     };
     localStorage.setItem("token", JSON.stringify(this._currentUser));
     this.router.navigate(["/"]);
@@ -78,10 +84,11 @@ export class AuthService {
 
   private decodeToken(decodedUser: any) {
     this._currentUser._id = decodedUser._id;
-    this._currentUser.email = decodedUser.email;
+    this._currentUser.Email = decodedUser.email;
     this._currentUser.isAdmin = decodedUser.isAdmin;
-    this._currentUser.password = decodedUser.password;
-    this._currentUser.role = decodedUser.role;
+    this._currentUser.Password = decodedUser.password;
+    this._currentUser.Role = decodedUser.role;
     this._currentUser.loggedIn = decodedUser.loggedIn;
+    this._currentUser.Tags = decodedUser.Tags;
   }
 }

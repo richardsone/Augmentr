@@ -8,7 +8,7 @@ export class AuthGuardExplorer implements CanActivate {
     constructor(public auth: AuthService, private router: Router) { }
 
     canActivate() {
-        return this.auth.currentUser.role === 'explorer';
+        return this.auth.currentUser.Role === 'explorer';
     }
 
 }

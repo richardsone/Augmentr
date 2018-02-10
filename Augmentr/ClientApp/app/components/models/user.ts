@@ -1,8 +1,10 @@
 export interface User {
     _id?: string,
-    email: string,
-    password: string,
-    role: string,
+    Email: string,
+    Name: string,
+    Password: string,
+    Role: string,
     loggedIn: boolean,
-    isAdmin: boolean
+    isAdmin: boolean,
+    Tags: any[]
 }

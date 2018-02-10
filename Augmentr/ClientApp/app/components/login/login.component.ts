@@ -12,6 +12,7 @@ import { User } from "../models/User";
 })
 export class LoginComponent {
   public email: string;
+  public name: string;
   public password: string;
   public errorMsg: any;
   public loggingIn: boolean = true;
@@ -28,11 +29,13 @@ export class LoginComponent {
     if (this.email === "admin@augmentr.com" && this.password === "password") {
       this.auth.login({
         _id: "1",
-        email: this.email,
-        password: this.password,
-        role: "admin",
+        Email: this.email,
+        Name: "adminname",
+        Password: this.password,
+        Role: "admin",
         loggedIn: true,
-        isAdmin: true
+        isAdmin: true,
+        Tags: []
       });
     } else if (
       this.email === "explorer@augmentr.com" &&
@@ -40,11 +43,13 @@ export class LoginComponent {
     ) {
       this.auth.login({
         _id: "1",
-        email: this.email,
-        password: this.password,
-        role: "explorer",
+        Email: this.email,
+        Name: "explorername",
+        Password: this.password,
+        Role: "explorer",
         loggedIn: true,
-        isAdmin: false
+        isAdmin: false,
+        Tags: []
       });
     }
     // Do stuff with login email and password
@@ -57,19 +62,22 @@ export class LoginComponent {
   register() {
     console.log("registering\n");
     let newUser: User = {
-      email: this.email,
-      password: this.password,
-      role: "explorer",
+      Email: this.email,
+      Name: this.name,
+      Password: this.password,
+      Role: "explorer",
       loggedIn: true,
-      isAdmin: false
+      isAdmin: false,
+      Tags: []
     }
     this.userService.register(newUser).subscribe(
       response => {
         console.log("you successfully registered!", "success");
         console.log(response);
         let test = response._body;
-        test = atob(response._body);
-        console.log(test);
+        // test = atob(response._body);
+        let myObject = JSON.parse(test);
+        console.log(myObject);
         // this.router.navigate(["/login"]);
       },
       error => {

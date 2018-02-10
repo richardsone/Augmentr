@@ -25,7 +25,10 @@ namespace Augmentr.Domain
 
         public string CreateTokenFromUser(User user)
         {
+            Console.WriteLine("We have a User");
+            Console.WriteLine(user);
             var token = new JsonNetSerializer().Serialize(user);
+            Console.WriteLine(token);
 
             return token;
         }
