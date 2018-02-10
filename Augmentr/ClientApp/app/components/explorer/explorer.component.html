@@ -1,1 +1,25 @@
-<h1> THe Explorer Only Page </h1>
+<h1> The Explorer Only Page </h1>
+
+<div class="panel-group">
+    
+    <div class="col-sm-12 panel panel-info">
+        <div class="panel-heading">
+            <h4 class="text-center strong panel-title">
+                Try to inject a User query!
+            </h4>
+        </div>
+        <div class="panel-body">
+            <input type="text" [(ngModel)]="dangerZone">
+            <button (click)="query()">Submit Query</button>
+        </div>
+        <div *ngIf="queryResults">
+            <h4 class="text-center">Query Results</h4>
+            <div>
+                <p>
+                    {{ queryResults }}
+                </p>
+            </div>
+        </div>
+    </div>
+  </div>
+  

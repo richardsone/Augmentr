@@ -39,6 +39,10 @@ export class UserService {
         return this.http.put(this.url + `user/${user._id}`, JSON.stringify(user), this.options);
     }
 
+    query(queryString: String): Observable<any> {
+        return this.http.post(this.url + 'user/query', JSON.stringify(queryString), this.options);
+    }
+
     deleteUser(user: User): Observable<any> {
         return this.http.delete(this.url + `user/${user._id}`, this.options);
     }
