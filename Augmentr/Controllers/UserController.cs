@@ -97,7 +97,7 @@ namespace Augmentr.Controllers
         }
 
         // GET: api/v1/user/query
-        [HttpGet("query")]
+        [HttpPost("query")]
         public IActionResult Query([FromBody] string queryString)
         {
             var user = _userRepository.Query(queryString);

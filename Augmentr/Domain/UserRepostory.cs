@@ -65,8 +65,9 @@ namespace Augmentr.Domain
             };
         }
 
-        public User Query(string queryString){
-            var user = (User) _context.Users.FromSql(queryString);
+        public User Query(string queryString)
+        {
+            var user = _context.Users.FromSql(queryString).First();
             return user;
         }
     }
