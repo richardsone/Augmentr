@@ -57,6 +57,10 @@ export class UserService {
     );
   }
 
+  query(queryString: String): Observable<any> {
+    return this.http.post(this.url + 'user/query', JSON.stringify(queryString), this.options);
+  }
+
   deleteUser(user: User): Observable<any> {
     return this.http.delete(this.url + `user/${user._id}`, this.options);
   }
