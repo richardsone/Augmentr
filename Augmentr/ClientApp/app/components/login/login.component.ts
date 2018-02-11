@@ -35,6 +35,7 @@ export class LoginComponent {
         console.log(response._body);
         let loggedInUser = JSON.parse(response._body);
         this.auth.currentUser = loggedInUser as User;
+        localStorage.setItem('token', response._body);
         console.log(this.auth.currentUser);
       }
     )

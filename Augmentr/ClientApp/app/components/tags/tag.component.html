@@ -3,7 +3,7 @@
     <h1>Tags</h1>
     <ul>
         <li *ngFor="let tag of tags">
-            <p>{{ tag.id }}: {{ tag.location }}
+            <p>{{ tag.Id }}: {{ tag.Location }}
                 <span class='glyphicon glyphicon-trash' (click)="removeTag(tag)"></span>
             </p>
         </li>
