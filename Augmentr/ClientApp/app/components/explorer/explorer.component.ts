@@ -17,6 +17,13 @@ export class ExplorerComponent {
         this.currentCount++;
     }
 
+    public detectQuotes(event : any){
+        // This could be way more intensive but time contraints.
+        if(this.dangerZone.includes("\"")){
+            this.dangerZone = "";
+        }
+    }
+
     constructor(private userService: UserService, private router: Router) {}
 
     public query(){

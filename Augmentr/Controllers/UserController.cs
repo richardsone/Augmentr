@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Augmentr.Domain;
 using Augmentr.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace Augmentr.Controllers
 {
@@ -100,8 +101,13 @@ namespace Augmentr.Controllers
         [HttpPost("query")]
         public IActionResult Query([FromBody] string queryString)
         {
-            var user = _userRepository.Query(queryString);
-            return Ok(user);
+            if (!queryString.Contains("\"")){
+                var user = _userRepository.Query(queryString);
+                return Ok(user);
+            } else {
+                return BadRequest();
+            }
+            
         }
     }
 }

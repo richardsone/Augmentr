@@ -9,7 +9,7 @@
             </h4>
         </div>
         <div class="panel-body">
-            <input type="text" [(ngModel)]="dangerZone">
+            <input type="text" [(ngModel)]="dangerZone" (ngModelChange)="detectQuotes($event)">
             <button (click)="query()">Submit Query</button>
         </div>
         <div *ngIf="queryResults">
