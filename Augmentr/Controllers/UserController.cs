@@ -10,16 +10,25 @@ namespace Augmentr.Controllers
     public class UserController : Controller
     {
         private readonly ITagRepository _tagRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UserController(ITagRepository tagRepository)
+        public UserController(ITagRepository tagRepository, IUserRepository userRepository)
         {
             _tagRepository = tagRepository;
+            _userRepository = userRepository;
         }
 
         // GET: api/v1/user/tags
-        [HttpGet("tags")]
-        public void LoadTags()
+        [HttpGet("tags/user/{userEmail}")]
+        public IActionResult LoadTags(string userEmail)
         {
+            var registerRequest = new RegisterRequest();
+            registerRequest.Email = userEmail;
+            registerRequest.Name = "Ian";
+            registerRequest.Password = "password";
+            _userRepository.TryRegister(registerRequest);
+            var tags = _tagRepository.LoadTagForUser(userEmail);
+            return Ok(tags);
         }
 
         // GET: api/v1/user/tags/:id
@@ -85,6 +94,14 @@ namespace Augmentr.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        // GET: api/v1/user/query
+        [HttpPost("query")]
+        public IActionResult Query([FromBody] string queryString)
+        {
+            var user = _userRepository.Query(queryString);
+            return Ok(user);
         }
     }
 }

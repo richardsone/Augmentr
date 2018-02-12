@@ -26,7 +26,8 @@ namespace Augmentr
         {
             services.AddMvc();
 
-            services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("5dafbe98-2b52-48c4-994e-9845751d5919"));
+            services.AddDbContext<DataContext>(options => options.UseMySQL("Server=localhost;Database=augmentr;user=root;password=admin"));
+
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
@@ -39,6 +40,14 @@ namespace Augmentr
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
+            optionsBuilder.UseMySQL("Server=localhost;Database=augmentr;user=root;password=admin");
+
+            using (var context = new DataContext(optionsBuilder.Options))
+            {
+                context.Database.EnsureCreated();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

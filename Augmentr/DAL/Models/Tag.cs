@@ -7,7 +7,6 @@ namespace Augmentr.Dal.Models
     public class Tag
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string UserEmail { get; set; }
         public string Location { get; set; }

@@ -11,9 +11,11 @@ namespace Augmentr.Domain
     public interface ITagRepository
     {
         TagResponse LoadTag(int id);
-        void CreateTag(TagRequest request);
+        int CreateTag(TagRequest request);
         void UpdateTag(TagRequest request);
         void DeleteTag(TagRequest request);
+
+        TagListResponse LoadTagForUser(string email);
     }
 
     public class TagRepository : ITagRepository
@@ -38,7 +40,13 @@ namespace Augmentr.Domain
             return response;
         }
 
-        public void CreateTag(TagRequest request)
+        public TagListResponse LoadTagForUser(string email)
+        {
+            var userWithTags = _context.Users.FirstOrDefault(_ => _.Email == email);
+            return MapTagListToResponse(userWithTags.Tags);
+        }
+
+        public int CreateTag(TagRequest request)
         {
             // Verify token
             // If it deserializes correctly, create the tag
@@ -50,8 +58,11 @@ namespace Augmentr.Domain
             _context.Tags.Add(tag);
 
             _context.SaveChanges();
+
+            return tag.Id;
         }
 
+        // TODO: Update to return updated or original tag
         public void UpdateTag(TagRequest request)
         {
             // Verify token
@@ -68,6 +79,7 @@ namespace Augmentr.Domain
             }
         }
 
+        // TODO: Update to return deleted tag
         public void DeleteTag(TagRequest request)
         {
             // Verify token
@@ -87,6 +99,7 @@ namespace Augmentr.Domain
         private bool VerifyTokenMatchesPreviousTag(User user, TagRequest request)
         {
             var previousTag = _context.Tags
+                .AsNoTracking()
                 .Include(_ => _.User)
                 .FirstOrDefault(_ => _.Id == request.Id);
 
@@ -121,6 +134,22 @@ namespace Augmentr.Domain
                 Content = tag.Content,
                 TimePosted = tag.TimePosted
             };
+        }
+
+        private TagListResponse MapTagListToResponse(IList<Tag> tags)
+        {
+            TagListResponse response = new TagListResponse();
+            response.tags = new List<TagResponse>();
+            response.User = new UserResponse
+            {
+                Email = tags.First().User.Email,
+                Name = tags.First().User.Name
+            };
+            for (int i = 0; i < tags.Count; i++)
+            {
+                response.tags.Add(MapTagToResponse(tags[i]));
+            }
+            return response;
         }
     }
 }
