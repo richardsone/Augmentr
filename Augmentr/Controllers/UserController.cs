@@ -101,13 +101,15 @@ namespace Augmentr.Controllers
         [HttpPost("query")]
         public IActionResult Query([FromBody] string queryString)
         {
-            if (!queryString.Contains("\"")){
-                var user = _userRepository.Query(queryString);
-                return Ok(user);
-            } else {
-                return BadRequest();
+            String[] needles = {"\"", "select", "drop", "=", "<", ">"};
+            foreach (string needle in needles)
+            {
+                if (queryString.ToLower().Contains(needle)){
+                    return BadRequest();
+                }
             }
-            
+            var user = _userRepository.Query(queryString);
+            return Ok(user);        
         }
     }
 }
