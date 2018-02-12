@@ -4,7 +4,5 @@ export interface User {
     Name: string,
     Password: string,
     Role: number,
-    loggedIn: boolean,
-    isAdmin: boolean,
     Tags: any[]
 }

@@ -24,18 +24,20 @@ export class TagComponent {
         // Do a API call to get the collection of tags that the current user can see
         // this.tags = array of tags, adjust the interface down there as needed.
 
-        this.tags = [
-            { Id : 1, Location : "San Francisco" },
-            { Id : 2, Location : "Houston" },
-            { Id : 3, Location : "Milwaukee" },
-            { Id : 4, Location : "Ney York" },
-            { Id : 5, Location : "Denver" },
-            { Id : 6, Location : "Drug house down the road" },
-            { Id : 7, Location : "Questionable massage parlor" },
-            { Id : 8, Location : "That chinese place with the dank dumplings" },
-            { Id : 9, Location : "Your mom's place" },
-            { Id : 10, Location : "Grand Canyon" }
-        ]
+        // this.tags = [
+        //     { Id : 1, Location : "San Francisco" },
+        //     { Id : 2, Location : "Houston" },
+        //     { Id : 3, Location : "Milwaukee" },
+        //     { Id : 4, Location : "Ney York" },
+        //     { Id : 5, Location : "Denver" },
+        //     { Id : 6, Location : "Drug house down the road" },
+        //     { Id : 7, Location : "Questionable massage parlor" },
+        //     { Id : 8, Location : "That chinese place with the dank dumplings" },
+        //     { Id : 9, Location : "Your mom's place" },
+        //     { Id : 10, Location : "Grand Canyon" }
+        // ]
+
+        this.tags = [];
     }
 
     createTag(){

@@ -51,8 +51,6 @@ export class LoginComponent {
       Name: this.name,
       Password: this.password,
       Role: 1,
-      loggedIn: true,
-      isAdmin: false,
       Tags: []
     }
     this.userService.register(newUser).subscribe(

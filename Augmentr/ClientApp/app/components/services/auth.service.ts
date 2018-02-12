@@ -28,8 +28,6 @@ export class AuthService {
       Name: '',
       Password: "",
       Role: 0,
-      loggedIn: false,
-      isAdmin: false,
       Tags: []
     };
     const token = localStorage.getItem("token");
@@ -42,8 +40,6 @@ export class AuthService {
         Name: '',
         Password: "",
         Role: 0,
-        loggedIn: false,
-        isAdmin: false,
         Tags: []
       };
       this._currentUser = newVisitor;
@@ -75,8 +71,6 @@ export class AuthService {
       Name: '',
       Password: "",
       Role: 0,
-      loggedIn: false,
-      isAdmin: false,
       Tags: []
     };
     localStorage.setItem("token", JSON.stringify(this._currentUser));
@@ -86,10 +80,8 @@ export class AuthService {
   private decodeToken(decodedUser: any) {
     this._currentUser._id = decodedUser._id;
     this._currentUser.Email = decodedUser.email;
-    this._currentUser.isAdmin = decodedUser.isAdmin;
     this._currentUser.Password = decodedUser.password;
     this._currentUser.Role = decodedUser.role;
-    this._currentUser.loggedIn = decodedUser.loggedIn;
     this._currentUser.Tags = decodedUser.Tags;
   }
 }
