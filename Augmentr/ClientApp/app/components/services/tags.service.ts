@@ -20,9 +20,13 @@ export class TagService {
   constructor(private http: Http,
               private auth: AuthService) {}
 
-//   getAllTags(): Observable<Tag> {
-//       return this.http.get(this.url + )
-//   }
+  getAllTags(): Observable<Tag> {
+    let post = {
+      Token: localStorage.getItem('token')
+    }
+    let userEmail = this.auth.currentUser.Email;
+    return this.http.get(this.url + `tags/user/${userEmail}`).map(res=> res.json());
+  }
 
   countUsers(): Observable<any> {
     return this.http.get(this.url + "users/count").map(res => res.json());

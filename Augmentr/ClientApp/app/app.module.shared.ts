@@ -49,7 +49,7 @@ import { TagService } from './components/services/tags.service';
             { path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: '**', redirectTo: 'home' }
+            // { path: '**', redirectTo: 'home' }
         ])
     ],
     providers: [

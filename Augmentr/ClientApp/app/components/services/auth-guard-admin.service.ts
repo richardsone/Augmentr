@@ -9,7 +9,7 @@ export class AuthGuardAdmin implements CanActivate {
                 private router: Router) { }
 
     canActivate() {
-        return this.auth.currentUser.isAdmin && this.auth.currentUser.Role === 2;
+        return this.auth.currentUser.Role === 2;
     }
 
 }
