@@ -48,9 +48,9 @@ namespace Augmentr.Controllers
         public IActionResult CreateTag([FromBody] TagRequest request)
         {
             try {
-                _tagRepository.CreateTag(request);
+                var id = _tagRepository.CreateTag(request);
 
-                return Ok();
+                return Ok(id);
             }
             catch (Exception)
             {
@@ -65,7 +65,7 @@ namespace Augmentr.Controllers
             try {
                 _tagRepository.UpdateTag(request);
 
-                return Ok();
+                return Ok(request.Id);
             }
             catch (KeyNotFoundException)
             {
@@ -84,7 +84,7 @@ namespace Augmentr.Controllers
             try {
                 _tagRepository.DeleteTag(request);
 
-                return Ok();
+                return Ok(request.Id);
             }
             catch (KeyNotFoundException)
             {
