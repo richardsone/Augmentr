@@ -42,7 +42,7 @@ namespace Augmentr.Domain
 
         public TagListResponse LoadTagForUser(string email)
         {
-            var userWithTags = _context.Users.FirstOrDefault(_ => _.Email == email);
+            var userWithTags = _context.Users.Include(_ => _.Tags).FirstOrDefault(_ => _.Email == email);
             return MapTagListToResponse(userWithTags);
         }
 
