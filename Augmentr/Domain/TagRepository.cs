@@ -125,11 +125,8 @@ namespace Augmentr.Domain
         {
             return new TagResponse
             {
-                User = new UserResponse
-                {
-                    Email = tag.User.Email,
-                    Name = tag.User.Name
-                },
+                Id = tag.Id,
+                UserEmail = tag.User.Email,
                 Location = tag.Location,
                 Content = tag.Content,
                 TimePosted = tag.TimePosted
