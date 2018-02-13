@@ -88,8 +88,6 @@ namespace Augmentr.Domain
         {
             if (userAttempts.LastRequest.AddHours(1) <= DateTime.Now)
                 userAttempts.Attempts = 0;
-            else
-                userAttempts.Attempts++;
 
             _context.Attempts.Update(userAttempts);
         }
