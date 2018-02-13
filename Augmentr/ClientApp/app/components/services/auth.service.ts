@@ -31,7 +31,7 @@ export class AuthService {
       Tags: []
     };
     const token = localStorage.getItem("token");
-    if (token) {
+    if (token != undefined) {
       this.jwtHelper.decodeToken(token);
     } else {
       const newVisitor = {
