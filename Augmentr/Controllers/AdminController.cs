@@ -17,7 +17,7 @@ namespace Augmentr.Controllers
         }
 
         // GET: /api/v1/admin/tags/{token}
-        [HttpGet("/tags/{token}")]
+        [HttpGet("tags/{token}")]
         public IActionResult LoadAllTags(string token)
         {
             var tags = _adminRepository.LoadAllTags(token);

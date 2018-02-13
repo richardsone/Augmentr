@@ -32,6 +32,8 @@ namespace Augmentr
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
             services.AddTransient<ITokenFactory, TokenFactory>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
+
 
             services.AddTransient<IJwtEncoder>(_ => new JwtEncoder(new HMACSHA256Algorithm(), new JsonNetSerializer(), new JwtBase64UrlEncoder()));
             services.AddTransient<IJwtDecoder>(_ => CreateJwtDecoder());
