@@ -1,7 +1,9 @@
 counter=0
-while [ $counter -le 15 ];
+echo "================Starting CURL Requests================"
+while [ $counter -le 1000 ];
 do
-    curl -v -O localhost:12000/api/v1/auth/login  # This can be changed to whatever, needs some params anyways
+    echo "Making request #$counter"
+    curl -d '{"Email":"fakeAF'$counter'@mrstealurgurl.com", "Password":"lol'$counter'", "name":"JimBob'$counter'"}' -H "Content-Type: application/json" -v "localhost:12000/api/v1/auth/register"
     (( counter++ ))
-    sleep 2
+    sleep 0.002
 done
