@@ -41,12 +41,20 @@ namespace Augmentr.Controllers
         [HttpPost("[action]")]
         public IActionResult Register([FromBody] RegisterRequest request)
         {
-            var token = _userRepository.TryRegister(request);
+            var ip = Request.HttpContext.Connection.RemoteIpAddress.ToString();
 
-            if (token == null) {
-                return BadRequest("User already Exists");
-            } 
-            return Ok(token);
+            if (_requestPolicy.VerifyRequest(ip)) 
+            {
+                var token = _userRepository.TryRegister(request);
+
+                if (token == null) {
+                    _requestPolicy.RecordBadRequest(ip);
+                    return BadRequest("User already Exists");
+                } 
+                _requestPolicy.RecordValidRequest(ip);
+                return Ok(token);
+            }
+            return Unauthorized();
         }
 
         // POST: api/v1/auth/logout

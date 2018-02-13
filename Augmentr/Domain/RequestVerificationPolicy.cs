@@ -50,6 +50,10 @@ namespace Augmentr.Domain
         {
             var userAttempts = _context.Attempts.FirstOrDefault(_ => _.IP == ip);
 
+            if (userAttempts == null)
+            {
+                CreateNewAttempt(ip);
+            }
             if (userAttempts != null)
             {
                 ResetAttempts(userAttempts);
@@ -63,7 +67,8 @@ namespace Augmentr.Domain
             var attempt = new UserAttempt
             {
                 IP = ip,
-                Attempts = 1
+                Attempts = 1,
+                LastRequest = DateTime.Now
             };
             _context.Attempts.Add(attempt);
         }
@@ -71,6 +76,7 @@ namespace Augmentr.Domain
         private void UpdateAttempts(UserAttempt userAttempts)
         {
             userAttempts.Attempts++;
+            userAttempts.LastRequest = DateTime.Now;
             if (userAttempts.Attempts >= MaxRequestsBeforeLockout)
             {
                 userAttempts.Timeout = DateTime.Now.AddHours(2);
@@ -80,7 +86,10 @@ namespace Augmentr.Domain
 
         private void ResetAttempts(UserAttempt userAttempts)
         {
-            userAttempts.Attempts = 0;
+            if (userAttempts.LastRequest.AddHours(1) <= DateTime.Now)
+                userAttempts.Attempts = 0;
+            else
+                userAttempts.Attempts++;
 
             _context.Attempts.Update(userAttempts);
         }
