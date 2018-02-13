@@ -10,10 +10,10 @@ import { Tag } from '../models/tag';
 })
 export class AdminComponent {
     public tags: Tag[];
-    public password: string;
+    public password: string = '';
     public errorMsg: any;
     public loggingIn: boolean = true;
-    public location: string;
+    public location: string = '';
     public content: string = 'fakeContent';
 
     constructor(private auth: AuthService,
@@ -23,11 +23,16 @@ export class AdminComponent {
         // Do a API call to get the collection of tags that the current user can see
         // this.tags = array of tags, adjust the interface down there as needed.
         this.tags = [];
-        this.tagService.getAllAdminTags().subscribe(data => {
-            console.log('data: ', data);
-            this.tags = data;
-            console.log(this.tags);
-        })
+        this.tagService.getAllAdminTags().subscribe(
+            data => {
+                console.log('data: ', data);
+                this.tags = data;
+                console.log(this.tags);
+            },
+            error => {
+                console.log('Nobody is logged in, silly! ', error);
+            }
+        )
         // this.tags = [];
     }
 
