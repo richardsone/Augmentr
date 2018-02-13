@@ -58,7 +58,7 @@ namespace Augmentr.Domain
             // Create tag
             var tag = MapRequestToTag(request, user.Email);
 
-            var previousTag = _context.Tags.Last();
+            var previousTag = _context.Tags.LastOrDefault();
             tag.Id = previousTag == null ? 1 : previousTag.Id + 1;
 
             _context.Tags.Add(tag);

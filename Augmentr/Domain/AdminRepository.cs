@@ -75,7 +75,7 @@ namespace Augmentr.Domain
 
                 var isAdmin = user.Role >= Roles.Admin;
 
-                return true;
+                return isAdmin;
             }
             catch (Exception)
             {

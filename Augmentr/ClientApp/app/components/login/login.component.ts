@@ -4,6 +4,7 @@ import { AppComponent } from "../app/app.component";
 import { AuthService } from "../services/auth.service";
 import { UserService } from "../services/user.service";
 import { User } from "../models/user";
+import { JwtHelper } from "angular2-jwt";
 
 @Component({
   selector: "login",
@@ -16,6 +17,7 @@ export class LoginComponent {
   public password: string;
   public errorMsg: any;
   public loggingIn: boolean = true;
+  public jwt = new JwtHelper();
 
   constructor(
     private auth: AuthService,
@@ -33,7 +35,7 @@ export class LoginComponent {
       response => {
         console.log("you've logged in");
         console.log(response._body);
-        let loggedInUser = JSON.parse(response._body);
+        let loggedInUser = this.jwt.decodeToken(response._body);
         this.auth.currentUser = loggedInUser as User;
         localStorage.setItem('token', response._body);
         console.log(this.auth.currentUser);
@@ -58,7 +60,7 @@ export class LoginComponent {
         console.log("you successfully registered!", "success");
         console.log(response);
         let test = response._body;
-        let myObject = JSON.parse(test);
+        let myObject = this.jwt.decodeToken(test);
         console.log(myObject);
         this.router.navigate(["/login"]);
       },

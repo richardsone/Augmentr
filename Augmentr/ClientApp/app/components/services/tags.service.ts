@@ -26,7 +26,8 @@ export class TagService {
   }
 
   getAllAdminTags(): Observable<any> {
-    return this.http.get(this.url + 'admin/tags/alltags').map(res=> res.json());
+    let token = localStorage.getItem('token');
+    return this.http.get(this.url + `admin/tags/${token}`).map(res=> res.json());
   }
 
   countUsers(): Observable<any> {

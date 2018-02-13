@@ -32,7 +32,7 @@ export class AuthService {
     };
     const token = localStorage.getItem("token");
     if (token) {
-      this.decodeToken(JSON.parse(token));
+      this.jwtHelper.decodeToken(token);
     } else {
       const newVisitor = {
         _id: "",
