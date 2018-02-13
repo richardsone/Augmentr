@@ -30,7 +30,7 @@ namespace Augmentr.Domain
         {
             if (TokenIsAdmin(token))
             {
-                var tags = _context.Tags.ToList();
+                var tags = _context.Tags.Include(_ => _.User).ToList();
 
                 var response = tags.Select(MapTagToResponse);
 

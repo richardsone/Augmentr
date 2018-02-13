@@ -52,13 +52,26 @@ export class TagService {
 
   deleteTag(id: number): Observable<any> {
     console.log("deleteTag: ", id);
-    let evansBody = {
+    let body = {
       Token: localStorage.getItem('token'),
       Id: id
     }
     return this.http.post(
       this.url + `user/tags/delete`,
-      JSON.stringify(evansBody),
+      JSON.stringify(body),
+      this.options
+    );
+  }
+
+  deleteAdminTag(id: number): Observable<any> {
+    console.log("deleteTag: ", id);
+    let body = {
+      Token: localStorage.getItem('token'),
+      Id: id
+    }
+    return this.http.post(
+      this.url + `admin/tags/destroy`,
+      JSON.stringify(body),
       this.options
     );
   }
