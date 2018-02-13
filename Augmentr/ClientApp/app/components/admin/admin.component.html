@@ -1,2 +1,11 @@
-<h1> THe Admin Only Page </h1>
-<h2> AKA: The cool zone </h2>
+<div class="alert alert-info" *ngIf="errorMsg !== undefined && errorMsg !== null" (click)="clearError()">{{ errorMsg }}</div>
+<div class="container">
+    <h1>All Tags (including the best ones)</h1>
+    <ul>
+        <li *ngFor="let tag of tags; let i = index">
+            <p>{{ i + 1 }}: {{ tag.location }}
+                <span class='glyphicon glyphicon-trash' (click)="removeTag(tag)"></span>
+            </p>
+        </li>
+    </ul>
+</div>

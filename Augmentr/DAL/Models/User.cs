@@ -14,7 +14,7 @@ namespace Augmentr.Dal.Models
 
         public IList<Tag> Tags { get; set; }
 
-        public User(){
+        public User() {
             Tags = new List<Tag>();
         }
     }

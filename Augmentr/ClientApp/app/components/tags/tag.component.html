@@ -2,8 +2,8 @@
 <div class="container">
     <h1>Tags</h1>
     <ul>
-        <li *ngFor="let tag of tags">
-            <p>{{ tag.id }}: {{ tag.location }}
+        <li *ngFor="let tag of tags; let i = index">
+            <p>{{ i + 1 }}: {{ tag.location }}
                 <span class='glyphicon glyphicon-trash' (click)="removeTag(tag)"></span>
             </p>
         </li>

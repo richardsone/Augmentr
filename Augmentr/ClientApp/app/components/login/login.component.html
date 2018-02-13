@@ -1,6 +1,9 @@
 <div class="container">
     <div class="alert alert-info" *ngIf="errorMsg !== undefined && errorMsg !== null" (click)="clearError()">{{ errorMsg }}</div>
-    <h2 class="text-center"><a (click)="loggingIn = true">Log in</a>/<a (click)="loggingIn = false">Register</a></h2>
+    <h2 class="text-center">
+        <a (click)="loggingIn = true">Log in</a>/
+        <a (click)="loggingIn = false">Register</a>
+    </h2>
     <div class="text-center col-sm-3 login-box" *ngIf="loggingIn">
         <h2>Log in</h2>
         <div class="field">
@@ -16,18 +19,21 @@
         </div>
     </div>
     <div class="text-center col-sm-3 login-box" *ngIf="!loggingIn">
-            <h2>Register</h2>
-            <div class="field">
-                <p>Email</p>
-                <input type="email" [(ngModel)]="email">
-            </div>
-            <div class="field">
-                <p>Password</p>
-                <input type="password" [(ngModel)]="password">
-            </div>
-            <div class="actions">
-                <button (click)="register()">Register</button>
-            </div>
+        <h2>Register</h2>
+        <div class="field">
+            <p>Email</p>
+            <input type="email" [(ngModel)]="email">
         </div>
-  </div>
-  
+        <div class="field">
+            <p>Name</p>
+            <input type="name" [(ngModel)]="name">
+        </div>
+        <div class="field">
+            <p>Password</p>
+            <input type="password" [(ngModel)]="password">
+        </div>
+        <div class="actions">
+            <button (click)="register()">Register</button>
+        </div>
+    </div>
+</div>
