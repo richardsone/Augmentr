@@ -43,7 +43,7 @@ namespace Augmentr.Domain
         public TagListResponse LoadTagForUser(string email)
         {
             var userWithTags = _context.Users.FirstOrDefault(_ => _.Email == email);
-            return MapTagListToResponse(userWithTags.Tags);
+            return MapTagListToResponse(userWithTags);
         }
 
         public int CreateTag(TagRequest request)
@@ -136,19 +136,18 @@ namespace Augmentr.Domain
             };
         }
 
-        private TagListResponse MapTagListToResponse(IList<Tag> tags)
+        private TagListResponse MapTagListToResponse(User user)
         {
-            TagListResponse response = new TagListResponse();
-            response.tags = new List<TagResponse>();
-            response.User = new UserResponse
+            var response = new TagListResponse
             {
-                Email = tags.First().User.Email,
-                Name = tags.First().User.Name
+                User = new UserResponse
+                {
+                    Email = user.Email,
+                    Name = user.Name
+                },
+                tags = user.Tags.Select(MapTagToResponse).ToList()
             };
-            for (int i = 0; i < tags.Count; i++)
-            {
-                response.tags.Add(MapTagToResponse(tags[i]));
-            }
+
             return response;
         }
     }
