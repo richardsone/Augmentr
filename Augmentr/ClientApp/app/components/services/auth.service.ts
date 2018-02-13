@@ -30,21 +30,6 @@ export class AuthService {
       Role: 0,
       Tags: []
     };
-    const token = localStorage.getItem("token");
-    if (token) {
-      this.jwtHelper.decodeToken(token);
-    } else {
-      const newVisitor = {
-        _id: "",
-        Email: "",
-        Name: '',
-        Password: "",
-        Role: 0,
-        Tags: []
-      };
-      this._currentUser = newVisitor;
-      localStorage.setItem("token", JSON.stringify(newVisitor));
-    }
   }
 
   login(user: any) {
