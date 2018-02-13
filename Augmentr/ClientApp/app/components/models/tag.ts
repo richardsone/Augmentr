@@ -1,5 +1,5 @@
 export interface Tag {
-    Id?: number,
+    Id: number,
     UserEmail?: string,
     Location?: string,
     Content?: string,

@@ -36,8 +36,12 @@ export class TagComponent {
         //     { Id : 9, Location : "Your mom's place" },
         //     { Id : 10, Location : "Grand Canyon" }
         // ]
-
         this.tags = [];
+        this.tagService.getAllTags().subscribe(data => {
+            this.tags = data.tags;
+            console.log(this.tags);
+        })
+        // this.tags = [];
     }
 
     createTag(){
@@ -52,6 +56,9 @@ export class TagComponent {
         this.tagService.addTag(newTag).subscribe(
             data => {
                 console.log('Data: ', data);
+                this.tagService.getAllTags().subscribe(tags => {
+                    this.tags = tags.tags;
+                });
             },
             error => {
                 console.log('Error: ', error);
@@ -59,9 +66,15 @@ export class TagComponent {
         );
     }
 
-    removeTag(deadTag : Tag){
+    removeTag(deadTag : any){
         // API call to kill that tag.
-        this.tags.splice(this.tags.indexOf(deadTag), 1)
+        console.log(deadTag);
+        this.tagService.deleteTag(deadTag.id).subscribe(response => {
+            console.log(response);
+            this.tagService.getAllTags().subscribe(tags => {
+                this.tags = tags.tags;
+            });
+        });
     }
 
     clearError(){

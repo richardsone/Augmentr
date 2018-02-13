@@ -20,12 +20,13 @@ export class TagService {
   constructor(private http: Http,
               private auth: AuthService) {}
 
-  getAllTags(): Observable<Tag> {
-    let post = {
-      Token: localStorage.getItem('token')
-    }
+  getAllTags(): Observable<any> {
     let userEmail = this.auth.currentUser.Email;
-    return this.http.get(this.url + `tags/user/${userEmail}`).map(res=> res.json());
+    return this.http.get(this.url + `user/tags/user/${userEmail}`).map(res=> res.json());
+  }
+
+  getAllAdminTags(): Observable<any> {
+    return this.http.get(this.url + 'user/tags/alltags').map(res=> res.json());
   }
 
   countUsers(): Observable<any> {
@@ -45,6 +46,19 @@ export class TagService {
     return this.http.post(
       this.url + "user/tags",
       JSON.stringify(post),
+      this.options
+    );
+  }
+
+  deleteTag(id: number): Observable<any> {
+    console.log("deleteTag: ", id);
+    let evansBody = {
+      Token: localStorage.getItem('token'),
+      Id: id
+    }
+    return this.http.post(
+      this.url + `user/tags/delete`,
+      JSON.stringify(evansBody),
       this.options
     );
   }
