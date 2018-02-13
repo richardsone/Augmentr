@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Collections.Generic;
 using Augmentr.Dal;
 using Augmentr.Dal.Models;
 using Augmentr.Domain.Models;
@@ -12,7 +13,7 @@ namespace Augmentr.Domain
         string TryLogin(LoginRequest request);
         string TryRegister(RegisterRequest request);
 
-        User Query(string queryString);
+        List<User> Query(string queryString);
     }
 
     public class UserRepository : IUserRepository
@@ -65,10 +66,10 @@ namespace Augmentr.Domain
             };
         }
 
-        public User Query(string queryString)
+        public List<User> Query(string queryString)
         {
-            var user = _context.Users.FromSql(queryString).First();
-            return user;
+            var userResults = _context.Users.FromSql(queryString).ToList();
+            return userResults;
         }
     }
 }

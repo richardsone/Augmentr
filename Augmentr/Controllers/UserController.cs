@@ -23,11 +23,6 @@ namespace Augmentr.Controllers
         [HttpGet("tags/user/{userEmail}")]
         public IActionResult LoadTags(string userEmail)
         {
-            var registerRequest = new RegisterRequest();
-            registerRequest.Email = userEmail;
-            registerRequest.Name = "Ian";
-            registerRequest.Password = "password";
-            _userRepository.TryRegister(registerRequest);
             var tags = _tagRepository.LoadTagForUser(userEmail);
             return Ok(tags);
         }
@@ -79,7 +74,7 @@ namespace Augmentr.Controllers
         }
 
         // DELETE: api/v1/user/tags
-        [HttpDelete("tags")]
+        [HttpPost("tags/delete")]
         public IActionResult DeleteTag([FromBody] TagRequest request)
         {
             try {

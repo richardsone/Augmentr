@@ -22,6 +22,7 @@ import { User } from './components/models/user';
 import { UserService } from './components/services/user.service';
 import { Expansion } from '@angular/compiler';
 import { AdminComponent } from './components/admin/admin.component';
+import { TagService } from './components/services/tags.service';
 
 @NgModule({
     declarations: [
@@ -43,19 +44,23 @@ import { AdminComponent } from './components/admin/admin.component';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'login', component: LoginComponent },
+            // { path: 'tags', component: TagComponent},
+            // { path: 'explorer', component: ExplorerComponent},
+            // { path: 'admin', component: AdminComponent},
             { path: 'tags', component: TagComponent, canActivate: [AuthGuardExplorer] },
             { path: 'explorer', component: ExplorerComponent, canActivate: [AuthGuardExplorer] },
             { path: 'admin', component: AdminComponent, canActivate: [AuthGuardAdmin] },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            { path: '**', redirectTo: 'home' }
+            // { path: '**', redirectTo: 'home' }
         ])
     ],
     providers: [
         AuthService,
         UserService,
         AuthGuardAdmin,
-        AuthGuardExplorer
+        AuthGuardExplorer,
+        TagService
     ]
 })
 export class AppModuleShared {

@@ -1,4 +1,7 @@
 export interface Tag {
-    id: number,
-    location: string
+    Id: number,
+    UserEmail?: string,
+    Location?: string,
+    Content?: string,
+    TimePosted?: string
 }

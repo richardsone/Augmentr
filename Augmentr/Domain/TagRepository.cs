@@ -42,8 +42,8 @@ namespace Augmentr.Domain
 
         public TagListResponse LoadTagForUser(string email)
         {
-            var userWithTags = _context.Users.FirstOrDefault(_ => _.Email == email);                     
-            return MapTagListToResponse(userWithTags.Tags);
+            var userWithTags = _context.Users.Include(_ => _.Tags).FirstOrDefault(_ => _.Email == email);
+            return MapTagListToResponse(userWithTags);
         }
 
         public int CreateTag(TagRequest request)
@@ -68,6 +68,7 @@ namespace Augmentr.Domain
             return tag.Id;
         }
 
+        // TODO: Update to return updated or original tag
         public void UpdateTag(TagRequest request)
         {
             // Verify token
@@ -87,6 +88,7 @@ namespace Augmentr.Domain
             }
         }
 
+        // TODO: Update to return deleted tag
         public void DeleteTag(TagRequest request)
         {
             // Verify token
@@ -135,30 +137,26 @@ namespace Augmentr.Domain
         {
             return new TagResponse
             {
-                User = new UserResponse
-                {
-                    Email = tag.User.Email,
-                    Name = tag.User.Name
-                },
+                Id = tag.Id,
+                UserEmail = tag.User.Email,
                 Location = tag.Location,
                 Content = tag.Content,
                 TimePosted = tag.TimePosted
             };
         }
 
-        private TagListResponse MapTagListToResponse(IList<Tag> tags)
+        private TagListResponse MapTagListToResponse(User user)
         {
-            TagListResponse response = new TagListResponse();
-            response.tags = new List<TagResponse>();
-            response.User = new UserResponse
-                {
-                    Email = tags.First().User.Email,
-                    Name = tags.First().User.Name
-                };
-            for(int i =0; i < tags.Count; i++)
+            var response = new TagListResponse
             {
-                response.tags.Add(MapTagToResponse(tags[i]));
-            }
+                User = new UserResponse
+                {
+                    Email = user.Email,
+                    Name = user.Name
+                },
+                tags = user.Tags.Select(MapTagToResponse).ToList()
+            };
+
             return response;
         }
     }

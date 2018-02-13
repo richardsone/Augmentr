@@ -17,7 +17,7 @@ namespace Augmentr.Domain
         private readonly IJwtEncoder _encoder;
         private readonly IJwtDecoder _decoder;
         private string _tokenSecret = "2548CBBADE864CC1AE017CFD4E6F255A";
-
+        
         public TokenFactory(IJwtEncoder encoder, IJwtDecoder decoder)
         {
             _encoder = encoder;

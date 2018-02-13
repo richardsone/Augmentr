@@ -26,12 +26,15 @@ namespace Augmentr
         {
             services.AddMvc();
 
-            services.AddDbContext<DataContext>(options => options.UseMySQL("Server=localhost;Database=augmentr;user=root;password=admin"));
+            services.AddDbContext<DataContext>(options => options.UseMySQL("Server=localhost;Database=augmentrsecure;user=root;password=admin"));
+
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITagRepository, TagRepository>();
             services.AddTransient<ITokenFactory, TokenFactory>();
             services.AddTransient<IRequestVerificationPolicy, RequestVerificationPolicy>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
+
 
             services.AddTransient<IJwtEncoder>(_ => new JwtEncoder(new HMACSHA256Algorithm(), new JsonNetSerializer(), new JwtBase64UrlEncoder()));
             services.AddTransient<IJwtDecoder>(_ => CreateJwtDecoder());
@@ -41,7 +44,7 @@ namespace Augmentr
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
-            optionsBuilder.UseMySQL("Server=localhost;Database=augmentr;user=root;password=admin");
+            optionsBuilder.UseMySQL("Server=localhost;Database=augmentrsecure;user=root;password=admin");
 
             using(var context = new DataContext(optionsBuilder.Options))
             {
